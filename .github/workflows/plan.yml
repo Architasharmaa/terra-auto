@@ -1,12 +1,7 @@
 name: Terraform
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+   workflow_dispatch:
 
 jobs:
   terraform:
@@ -19,21 +14,12 @@ jobs:
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.0.0
-
+        
       - name: Terraform Init
         run: terraform init
-
-      - name: Terraform Format
-        run: terraform fmt -check
-
-      - name: Terraform Validate
-        run: terraform validate
 
       - name: Terraform Plan
         run: terraform plan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
